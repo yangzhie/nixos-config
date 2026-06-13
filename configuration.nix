@@ -73,6 +73,7 @@
   users.users."arn" = {
     isNormalUser = true;
     description = "arn";
+    shell = pkgs.zsh;
     extraGroups = [ "networkmanager" "wheel" "video" ];
     packages = with pkgs; [];
   };
@@ -97,11 +98,24 @@
   # Autorandr (monitors)
   services.autorandr.enable = true;
 
+  # Shell
+  programs.zsh = {
+    enable = true;
+    autosuggestions.enable = true;
+    syntaxHighlighting.enable = true;
+    ohMyZsh = {
+      enable = true;
+      theme = "fox";
+      plugins = [ "git" "history" "sudo" ];
+    };
+  };
+
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
   #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
   #  wget
+    fastfetch
     autorandr
     i3status-rust
     xss-lock
