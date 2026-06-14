@@ -6,6 +6,7 @@
 
 {
   nixpkgs.config.allowUnfree = true;
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
   imports =
     [ # Include the results of the hardware scan.
@@ -58,7 +59,7 @@
         layout = "au";
         variant = "";
     };
-    resolutions = [ { x = 1920; y = 1200; } ];
+    resolutions = [ { x = 1680; y = 1050; } ];
   };
 
   # Audio
@@ -110,9 +111,19 @@
     };
   };
 
+  # Compositor
+  services.picom = {
+    enable = true;
+    vSync = true;
+  };
+
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
+    pkgs.mission-center
+    itch
+    vlc
+    vscode
     gcc
     jdk
     nodejs
@@ -125,10 +136,8 @@
     brightnessctl
     wirelesstools
     google-chrome
-    vim
     git
     prismlauncher
-    firefox
     discord
     obsidian
     dropbox
